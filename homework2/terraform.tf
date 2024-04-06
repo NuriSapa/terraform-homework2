@@ -1,7 +1,3 @@
-provider "aws" {
-    region = "eu-central-1"
-  
-}
 
 resource "aws_key_pair" "deployer" {
 key_name   = "bastion-key"
