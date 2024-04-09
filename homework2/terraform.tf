@@ -4,31 +4,36 @@ key_name   = "bastion-key"
 public_key = file("~/.ssh/id_rsa.pub")
 }
 
-resource "aws_s3_bucket" "example" {
+resource "aws_s3_bucket" "homework" {
   bucket_prefix = "kaizen-"
 
 }
 
-resource "aws_s3_bucket" "example" {
+resource "aws_s3_bucket" "homework2" {
   bucket = "kaizen-nuriza"
 
 }
 
-# import {
-#   to = aws_s3_bucket.bucket
-#   id = "mybacket-24"
+import {
+  to = aws_s3_bucket.bucket
+  id = "my-backet-hw"
   
-# }
-
-resource "aws_s3_bucket" "bucket" {
-   bucket = "mybacket24" 
 }
 
 resource "aws_s3_bucket" "bucket" {
-   bucket = "mybacket-24" 
+   bucket = "my-backet-hw" 
 }
 
-#terraform import 'aws_s3_bucket.bucket' mybacket24
+import {
+  to = aws_s3_bucket.home2
+  id = "my-backet-hw2"
+  
+}
+resource "aws_s3_bucket" "home2" {
+   bucket = "my-backet-hw2" 
+}
+
+#terraform import 'aws_s3_bucket.bucket' my-backet-hw (hw2)
 
 resource "aws_iam_user" "lb" {
   for_each = toset([
