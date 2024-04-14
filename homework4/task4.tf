@@ -3,24 +3,33 @@ provider aws {
 
 }
 
-resource "aws_key_pair" "deployer" {
-  key_name   = "deployer-key"
-  public_key = file("~/.ssh/id_rsa.pub")
-}
-
 resource "aws_instance" "web" {
   ami = var.ami_id
-
-  #ami uniq for each region need to pay attention
+  #ami = ami-0900fe555666598a2 ohio
   instance_type = var.type
 
+  tags = local.common_tags
+  count = 1
+  vpc_security_group_ids = [aws_security_group.allow_tls.id]
+
+  key_name = aws_key_pair.example.key_name
 }
 
-variable type  {
+variable ami_id {
+  description = "Provide ami id"
+  default = ""
+  type = string
+} 
+
+variable type {
   description = "Provide instance type"
-  default = "t2.micro"
+  default = ""
   type = string
 }
 
-
+variable region {
+  description = "Provide region"
+  default = ""
+  type = string
+}
 
