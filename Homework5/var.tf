@@ -18,3 +18,8 @@ variable subnet_cider {
    
   
 }
+variable instance_type  {
+    type = string
+
+}
+

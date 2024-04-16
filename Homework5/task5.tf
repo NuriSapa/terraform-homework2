@@ -18,7 +18,6 @@ resource "aws_subnet" "public1" {
   }
 }
 
-
 resource "aws_subnet" "public2" {
   vpc_id     = aws_vpc.kaizen.id
   cidr_block = var.subnet_cider[1].cider
@@ -44,13 +43,14 @@ resource "aws_subnet" "private1" {
 
 resource "aws_subnet" "private2" {
   vpc_id     = aws_vpc.kaizen.id
-  cidr_block = var.subnet_cider[2].cider
+  cidr_block = var.subnet_cider[3].cider
    map_public_ip_on_launch = true
-  availability_zone = "${var.region}d"
+  availability_zone = "${var.region}c"
   tags = {
-    Name = var.subnet_cider[2].subnet_name
+    Name = var.subnet_cider[3].subnet_name
   }
 }
+
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.kaizen.id
@@ -59,3 +59,4 @@ resource "aws_internet_gateway" "igw" {
     Name = "homework5_igw"
   }
 }
+
