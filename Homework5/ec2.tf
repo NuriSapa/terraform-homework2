@@ -17,12 +17,12 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "Kaizen" {
   ami           = data.aws_ami.ubuntu.id
-
+  
   #aim uniq for each region need to pay attention
   instance_type = var.instance_type
 
   
-  subnet_id = var.subnet_cider[0].subnet_name
+  subnet_id = aws_subnet.public1.id
   
 
   #subnet_id = ""
