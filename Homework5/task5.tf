@@ -60,3 +60,32 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
+# Create a route in the public route table for internet access
+resource "aws_route" "public_internet_access" {
+  route_table_id         = aws_route_table.public_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.example.id  # Assuming you have already created an internet gateway named "example"
+}
+
+# Create the public route table
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.kaizen.id
+  tags = {
+    Name = "public-rt"
+  }
+}
+
+# Create the private route table
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.kaizen.id
+  tags = {
+    Name = "private-rt"
+  }
+}
+
+# Create a route in the public route table for internet access
+resource "aws_route" "public_internet_access" {
+  route_table_id         = aws_route_table.public_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw.id  # Assuming you have already created an internet gateway named "example"
+}
