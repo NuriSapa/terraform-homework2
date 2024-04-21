@@ -17,8 +17,8 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "Kaizen" {
 
-  ami           = data.aws_ami.ubuntu.id
-  
+  ami = data.aws_ami.ubuntu.id
+
   #aim uniq for each region need to pay attention
   instance_type = var.instance_type
 
@@ -26,13 +26,13 @@ resource "aws_instance" "Kaizen" {
     Name = "kaizen"
   }
   subnet_id = aws_subnet.public1.id
-  
+
 
   #subnet_id = ""
   vpc_security_group_ids = [aws_security_group.allow_tls.id]
 
   user_data = file("ubuntu.sh")
-  
+
 }
 
 

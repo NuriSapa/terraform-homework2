@@ -1,25 +1,25 @@
-variable region {
-    type = string
-   description = "provide region"
-  
+variable "region" {
+  type        = string
+  description = "provide region"
+
 }
 
-variable vpc_cider {
-    type = string
-   description = "provide vpc cider block"
-  
+variable "vpc_cider" {
+  type        = string
+  description = "provide vpc cider block"
+
 }
 
-variable subnet_cider {
-    type = list(object({
-        cider = string
-        subnet_name = string
-    }))
-   
-  
+variable "subnet_cider" {
+  type = list(object({
+    cider       = string
+    subnet_name = string
+  }))
+
+
 }
-variable instance_type  {
-    type = string
+variable "instance_type" {
+  type = string
 
 }
 

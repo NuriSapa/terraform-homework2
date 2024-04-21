@@ -1,5 +1,5 @@
-provider aws {
-    region = var.region 
+provider "aws" {
+  region = var.region
 }
 
 resource "aws_vpc" "kaizen" {
@@ -11,9 +11,9 @@ resource "aws_subnet" "public1" {
   cidr_block = var.subnet_cider[0].cider
 
   map_public_ip_on_launch = true
-  availability_zone = "${var.region}b"
+  availability_zone       = "${var.region}b"
 
-    tags = {
+  tags = {
     Name = var.subnet_cider[0].subnet_name
   }
 }
@@ -24,28 +24,28 @@ resource "aws_subnet" "public2" {
 
 
   map_public_ip_on_launch = true
-  availability_zone = "${var.region}b"
+  availability_zone       = "${var.region}b"
 
-    tags = {
+  tags = {
     Name = var.subnet_cider[1].subnet_name
   }
 }
 
 resource "aws_subnet" "private1" {
-  vpc_id     = aws_vpc.kaizen.id
-  cidr_block = var.subnet_cider[2].cider
-   map_public_ip_on_launch = true
-  availability_zone = "${var.region}c"
+  vpc_id                  = aws_vpc.kaizen.id
+  cidr_block              = var.subnet_cider[2].cider
+  map_public_ip_on_launch = true
+  availability_zone       = "${var.region}c"
   tags = {
     Name = var.subnet_cider[2].subnet_name
   }
 }
 
 resource "aws_subnet" "private2" {
-  vpc_id     = aws_vpc.kaizen.id
-  cidr_block = var.subnet_cider[3].cider
-   map_public_ip_on_launch = true
-  availability_zone = "${var.region}c"
+  vpc_id                  = aws_vpc.kaizen.id
+  cidr_block              = var.subnet_cider[3].cider
+  map_public_ip_on_launch = true
+  availability_zone       = "${var.region}c"
   tags = {
     Name = var.subnet_cider[3].subnet_name
   }
@@ -65,15 +65,17 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.kaizen.id
   tags = {
-    Name = "public-rt"
+    Name = "public_rt"
   }
 }
+
+
 
 # Create the private route table
 resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.kaizen.id
   tags = {
-    Name = "private-rt"
+    Name = "private_rt"
   }
 }
 
@@ -81,5 +83,25 @@ resource "aws_route_table" "private_rt" {
 resource "aws_route" "public_internet_access" {
   route_table_id         = aws_route_table.public_rt.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.igw.id  # Assuming you have already created an internet gateway named "example"
+  gateway_id             = aws_internet_gateway.igw.id # Assuming you have already created an internet gateway named "example"
+}
+
+resource "aws_route" "private_internet_access" {
+  route_table_id         = aws_route_table.private_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw.id # Assuming you have already created an internet gateway named "example"
+}
+
+resource "aws_route_table_association" "public_assos" {
+  subnet_id      = aws_subnet.public1.id
+  route_table_id = aws_route_table.public_rt.id
+
+
+}
+
+resource "aws_route_table_association" "public2_assos" {
+  subnet_id      = aws_subnet.public2.id
+  route_table_id = aws_route_table.public_rt.id
+
+
 }
