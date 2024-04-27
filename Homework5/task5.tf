@@ -4,6 +4,12 @@ provider "aws" {
 
 resource "aws_vpc" "kaizen" {
   cidr_block = var.vpc_cider
+  enable_dns_hostnames = true
+  enable_dns_support = true
+
+  tags = {
+    Name = "KaizenVPC"
+  }
 }
 
 resource "aws_subnet" "public1" {
