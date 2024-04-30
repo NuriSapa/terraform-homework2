@@ -3,13 +3,9 @@ provider "aws" {
 }
 
 resource "aws_vpc" "kaizen" {
-  cidr_block = var.vpc_cider
-  enable_dns_hostnames = true
-  enable_dns_support = true
-
-  tags = {
-    Name = "KaizenVPC"
-  }
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = var.enable_dns_support
+  enable_dns_hostnames = var.enable_dns_hostnames
 }
 
 resource "aws_subnet" "public1" {
@@ -19,9 +15,7 @@ resource "aws_subnet" "public1" {
   map_public_ip_on_launch = true
   availability_zone       = "${var.region}b"
 
-  tags = {
-    Name = var.subnet_cider[0].subnet_name
-  }
+ 
 }
 
 resource "aws_subnet" "public2" {
@@ -32,9 +26,7 @@ resource "aws_subnet" "public2" {
   map_public_ip_on_launch = true
   availability_zone       = "${var.region}b"
 
-  tags = {
-    Name = var.subnet_cider[1].subnet_name
-  }
+  
 }
 
 resource "aws_subnet" "private1" {
@@ -42,9 +34,7 @@ resource "aws_subnet" "private1" {
   cidr_block              = var.subnet_cider[2].cider
   map_public_ip_on_launch = true
   availability_zone       = "${var.region}c"
-  tags = {
-    Name = var.subnet_cider[2].subnet_name
-  }
+ 
 }
 
 resource "aws_subnet" "private2" {
@@ -52,9 +42,7 @@ resource "aws_subnet" "private2" {
   cidr_block              = var.subnet_cider[3].cider
   map_public_ip_on_launch = true
   availability_zone       = "${var.region}c"
-  tags = {
-    Name = var.subnet_cider[3].subnet_name
-  }
+ 
 }
 
 
